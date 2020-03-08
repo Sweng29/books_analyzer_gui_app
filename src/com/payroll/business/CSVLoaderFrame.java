@@ -5,30 +5,24 @@
  */
 package com.payroll.business;
 
-import com.payroll.dao.AttendanceDAO;
-import com.payroll.daoimpl.AttendanceDAOImpl;
-import com.payroll.models.Attendance;
-import com.payroll.utility.CommonMethods;
+import com.books.utility.CommonMethods;
 import java.sql.ResultSet;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 /**
  *
  * @author Kashif Alei
  */
-public class UserAttendanceFrame extends javax.swing.JFrame {
+public class CSVLoaderFrame extends javax.swing.JFrame {
 
     /**
-     * Creates new form UserAttendanceFrame
+     * Creates new form CSVLoaderFrame
      */
-    private String pattern = "yyyy-MM-dd";
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-    private AttendanceDAOImpl attendanceDAO = new AttendanceDAOImpl();
-    public UserAttendanceFrame() {
+    
+    public CSVLoaderFrame() {
         initComponents();
         this.setLocationRelativeTo(null);
         populateAttendanceTable();
@@ -51,7 +45,7 @@ public class UserAttendanceFrame extends javax.swing.JFrame {
         attendanceSearch = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         attendanceTable = new javax.swing.JTable();
-        addAttendanceBtn = new javax.swing.JLabel();
+        csvLoaderBtn = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -64,7 +58,7 @@ public class UserAttendanceFrame extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Attendance");
+        jLabel1.setText("CSV Loader");
 
         jLabel2.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -116,8 +110,8 @@ public class UserAttendanceFrame extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Search Attendance");
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 40, -1, 26));
+        jLabel4.setText("Search");
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 40, -1, 26));
 
         attendanceSearch.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
         attendanceSearch.addActionListener(new java.awt.event.ActionListener() {
@@ -158,21 +152,21 @@ public class UserAttendanceFrame extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(attendanceTable);
 
-        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 75, 1330, 580));
+        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(625, 75, 720, 580));
 
-        addAttendanceBtn.setBackground(new java.awt.Color(53, 168, 83));
-        addAttendanceBtn.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
-        addAttendanceBtn.setForeground(new java.awt.Color(255, 255, 255));
-        addAttendanceBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        addAttendanceBtn.setText("Record Today's Attendance");
-        addAttendanceBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        addAttendanceBtn.setOpaque(true);
-        addAttendanceBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+        csvLoaderBtn.setBackground(new java.awt.Color(53, 168, 83));
+        csvLoaderBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        csvLoaderBtn.setForeground(new java.awt.Color(255, 255, 255));
+        csvLoaderBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        csvLoaderBtn.setText("Select File");
+        csvLoaderBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        csvLoaderBtn.setOpaque(true);
+        csvLoaderBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                addAttendanceBtnMouseClicked(evt);
+                csvLoaderBtnMouseClicked(evt);
             }
         });
-        jPanel2.add(addAttendanceBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 260, 34));
+        jPanel2.add(csvLoaderBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 170, 40));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 1370, 670));
 
@@ -192,7 +186,7 @@ public class UserAttendanceFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_attendanceSearchKeyReleased
 
     private void attendanceTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_attendanceTableMouseClicked
-
+        
     }//GEN-LAST:event_attendanceTableMouseClicked
 
     private void attendanceTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_attendanceTableMouseReleased
@@ -207,29 +201,20 @@ public class UserAttendanceFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jPanel2MouseClicked
 
-    private void addAttendanceBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addAttendanceBtnMouseClicked
-        if(addAttendanceBtn.isEnabled()){
-            try {
-                Date todaysAttendaceDate = new Date();
-                String date = simpleDateFormat.format(todaysAttendaceDate);
-                String userName = LoginFrame.userModel.getUserName();
-                Attendance attendance = new Attendance();
-                attendance.setAttendanceDate(simpleDateFormat.parse(date));
-                attendance.setUserName(userName);
-                int check = attendanceDAO.save(attendance);
-                if(check>0)
-                {
-                    populateAttendanceTable();
-                    new MessageForm("Success","Your attendance for today has been added successfully.","info.png").setVisible(true);
-                }else
-                {
-                    new MessageForm("Error","Your attendance for today already exist.","error.png").setVisible(true);
-                }
-            } catch (ParseException ex) {
-                Logger.getLogger(UserAttendanceFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
+    private void csvLoaderBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_csvLoaderBtnMouseClicked
+        UIManager.put("FileChooser.cancelButtonText", "Cancel");
+        UIManager.put("FileChooser.saveButtonText", "Select File");
+        JFileChooser fileChooser = new JFileChooser("d:");
+        SwingUtilities.updateComponentTreeUI(fileChooser);
+        int r = fileChooser.showSaveDialog(null);   
+        // if the user selects a file 
+        if (r == JFileChooser.APPROVE_OPTION) { 
+            System.out.println(fileChooser.getSelectedFile().getAbsolutePath());
+        } // if the user cancelled the operation 
+        else {
+            System.out.println("the user cancelled the operation");
         }
-    }//GEN-LAST:event_addAttendanceBtnMouseClicked
+    }//GEN-LAST:event_csvLoaderBtnMouseClicked
 
     /**
      * @param args the command line arguments
@@ -248,28 +233,29 @@ public class UserAttendanceFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(UserAttendanceFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CSVLoaderFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(UserAttendanceFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CSVLoaderFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(UserAttendanceFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CSVLoaderFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(UserAttendanceFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CSVLoaderFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new UserAttendanceFrame().setVisible(true);
+                new CSVLoaderFrame().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel addAttendanceBtn;
     private javax.swing.JTextField attendanceSearch;
     private javax.swing.JTable attendanceTable;
+    private javax.swing.JLabel csvLoaderBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
@@ -279,7 +265,7 @@ public class UserAttendanceFrame extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void populateAttendanceTable() {
-        ResultSet resultSet = new AttendanceDAOImpl().findAllAttendancesByUserName(LoginFrame.userModel.getUserName());
-        CommonMethods.fillTables(resultSet, attendanceTable, jScrollPane2, this);
+        //ResultSet resultSet = attendanceDAO.findAll();
+        //CommonMethods.fillTables(resultSet, attendanceTable, jScrollPane2, this);
     }
 }

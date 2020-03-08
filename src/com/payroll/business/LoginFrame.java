@@ -247,12 +247,6 @@ public class LoginFrame extends javax.swing.JFrame {
             if (userModel != null && userModel.getDesignation().equalsIgnoreCase("Admin")) {
                 new MainFrame().setVisible(true);
                 this.dispose();
-            } else if (userModel != null) {
-                new GeneralUserFrame().setVisible(true);
-                Date todaysAttendaceDate = new Date();
-                String date = simpleDateFormat.format(todaysAttendaceDate);
-                String userName = userModel.getUserName();
-                this.dispose();
             } else {
                 new MessageForm("Error", "Wrong username and password", "error.png").setVisible(true);
             }
@@ -265,9 +259,6 @@ public class LoginFrame extends javax.swing.JFrame {
             userModel = new UserDaoImpl().loginUser(userModel);
             if (userModel != null && userModel.getDesignation().equalsIgnoreCase("Admin")) {
                 new MainFrame().setVisible(true);
-                this.dispose();
-            } else if (userModel != null) {
-                new GeneralUserFrame().setVisible(true);
                 this.dispose();
             } else {
                 new MessageForm("Error", "Wrong email or password", "error.png").setVisible(true);

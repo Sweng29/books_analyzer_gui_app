@@ -93,11 +93,9 @@ public BoxLayout box;
 
         jPanel_Center = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        meetingBtn = new javax.swing.JLabel();
-        attendanceBtn = new javax.swing.JLabel();
         usersBtn = new javax.swing.JLabel();
-        reportsBtn = new javax.swing.JLabel();
-        leaveBtn = new javax.swing.JLabel();
+        analyzerBtn = new javax.swing.JLabel();
+        csvLoaderBtn = new javax.swing.JLabel();
         jPanel_UP = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -115,34 +113,6 @@ public BoxLayout box;
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        meetingBtn.setBackground(new java.awt.Color(53, 168, 83));
-        meetingBtn.setFont(new java.awt.Font("Century Gothic", 0, 48)); // NOI18N
-        meetingBtn.setForeground(new java.awt.Color(255, 255, 255));
-        meetingBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        meetingBtn.setText("Meeting");
-        meetingBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        meetingBtn.setOpaque(true);
-        meetingBtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                meetingBtnMouseClicked(evt);
-            }
-        });
-        jPanel2.add(meetingBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(930, 100, 250, 80));
-
-        attendanceBtn.setBackground(new java.awt.Color(53, 168, 83));
-        attendanceBtn.setFont(new java.awt.Font("Century Gothic", 0, 48)); // NOI18N
-        attendanceBtn.setForeground(new java.awt.Color(255, 255, 255));
-        attendanceBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        attendanceBtn.setText("Attendance");
-        attendanceBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        attendanceBtn.setOpaque(true);
-        attendanceBtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                attendanceBtnMouseClicked(evt);
-            }
-        });
-        jPanel2.add(attendanceBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 330, 310, 90));
-
         usersBtn.setBackground(new java.awt.Color(53, 168, 83));
         usersBtn.setFont(new java.awt.Font("Century Gothic", 0, 48)); // NOI18N
         usersBtn.setForeground(new java.awt.Color(255, 255, 255));
@@ -155,35 +125,35 @@ public BoxLayout box;
                 usersBtnMouseClicked(evt);
             }
         });
-        jPanel2.add(usersBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, 270, 90));
+        jPanel2.add(usersBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 420, 340, 90));
 
-        reportsBtn.setBackground(new java.awt.Color(53, 168, 83));
-        reportsBtn.setFont(new java.awt.Font("Century Gothic", 0, 48)); // NOI18N
-        reportsBtn.setForeground(new java.awt.Color(255, 255, 255));
-        reportsBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        reportsBtn.setText("Reports");
-        reportsBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        reportsBtn.setOpaque(true);
-        reportsBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+        analyzerBtn.setBackground(new java.awt.Color(53, 168, 83));
+        analyzerBtn.setFont(new java.awt.Font("Century Gothic", 0, 48)); // NOI18N
+        analyzerBtn.setForeground(new java.awt.Color(255, 255, 255));
+        analyzerBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        analyzerBtn.setText("Analyse Data");
+        analyzerBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        analyzerBtn.setOpaque(true);
+        analyzerBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                reportsBtnMouseClicked(evt);
+                analyzerBtnMouseClicked(evt);
             }
         });
-        jPanel2.add(reportsBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 330, 280, 90));
+        jPanel2.add(analyzerBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 230, 340, 90));
 
-        leaveBtn.setBackground(new java.awt.Color(53, 168, 83));
-        leaveBtn.setFont(new java.awt.Font("Century Gothic", 0, 48)); // NOI18N
-        leaveBtn.setForeground(new java.awt.Color(255, 255, 255));
-        leaveBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        leaveBtn.setText("Leave");
-        leaveBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        leaveBtn.setOpaque(true);
-        leaveBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+        csvLoaderBtn.setBackground(new java.awt.Color(53, 168, 83));
+        csvLoaderBtn.setFont(new java.awt.Font("Century Gothic", 0, 48)); // NOI18N
+        csvLoaderBtn.setForeground(new java.awt.Color(255, 255, 255));
+        csvLoaderBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        csvLoaderBtn.setText("Load CSV");
+        csvLoaderBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        csvLoaderBtn.setOpaque(true);
+        csvLoaderBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                leaveBtnMouseClicked(evt);
+                csvLoaderBtnMouseClicked(evt);
             }
         });
-        jPanel2.add(leaveBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 100, 270, 90));
+        jPanel2.add(csvLoaderBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 50, 340, 90));
 
         jPanel_Center.add(jPanel2, java.awt.BorderLayout.CENTER);
 
@@ -250,25 +220,17 @@ public BoxLayout box;
        System.exit(0);
     }//GEN-LAST:event_jLabel1MouseClicked
 
-    private void meetingBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_meetingBtnMouseClicked
-        new MeetingFrame().setVisible(true);
-    }//GEN-LAST:event_meetingBtnMouseClicked
-
-    private void attendanceBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_attendanceBtnMouseClicked
-        new AttendanceFrame().setVisible(true);
-    }//GEN-LAST:event_attendanceBtnMouseClicked
-
     private void usersBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_usersBtnMouseClicked
         new UserFrame().setVisible(true);
     }//GEN-LAST:event_usersBtnMouseClicked
 
-    private void reportsBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reportsBtnMouseClicked
+    private void analyzerBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_analyzerBtnMouseClicked
         new ReportsFrame().setVisible(true);
-    }//GEN-LAST:event_reportsBtnMouseClicked
+    }//GEN-LAST:event_analyzerBtnMouseClicked
 
-    private void leaveBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_leaveBtnMouseClicked
-        new LeaveFrame().setVisible(true);
-    }//GEN-LAST:event_leaveBtnMouseClicked
+    private void csvLoaderBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_csvLoaderBtnMouseClicked
+        new CSVLoaderFrame().setVisible(true);
+    }//GEN-LAST:event_csvLoaderBtnMouseClicked
 
     /**
      * @param args the command line arguments
@@ -288,7 +250,8 @@ public BoxLayout box;
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel attendanceBtn;
+    private javax.swing.JLabel analyzerBtn;
+    private javax.swing.JLabel csvLoaderBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
@@ -296,9 +259,6 @@ public BoxLayout box;
     private javax.swing.JPanel jPanel_Center;
     private javax.swing.JPanel jPanel_Down;
     private javax.swing.JPanel jPanel_UP;
-    private javax.swing.JLabel leaveBtn;
-    private javax.swing.JLabel meetingBtn;
-    private javax.swing.JLabel reportsBtn;
     private javax.swing.JLabel userName;
     private javax.swing.JLabel usersBtn;
     // End of variables declaration//GEN-END:variables
