@@ -6,6 +6,7 @@
 package com.payroll.business;
 
 import com.books.utility.CommonMethods;
+import com.books.utility.ExcelUtility;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import javax.swing.JFileChooser;
@@ -210,9 +211,11 @@ public class CSVLoaderFrame extends javax.swing.JFrame {
         // if the user selects a file 
         if (r == JFileChooser.APPROVE_OPTION) { 
             System.out.println(fileChooser.getSelectedFile().getAbsolutePath());
+            String filePath = fileChooser.getSelectedFile().getAbsolutePath();
+            ExcelUtility.readFromExcel(filePath);
         } // if the user cancelled the operation 
         else {
-            System.out.println("the user cancelled the operation");
+            System.out.println("The user cancelled the operation.");
         }
     }//GEN-LAST:event_csvLoaderBtnMouseClicked
 
