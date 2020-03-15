@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.payroll.business;
+package com.books.business;
 
-import com.payroll.dao.UserDAO;
-import com.payroll.daoimpl.UserDaoImpl;
-import com.payroll.models.User;
-import com.payroll.utility.CommonMethods;
+import com.books.dao.UserDAO;
+import com.books.daoimpl.UserDaoImpl;
+import com.books.models.User;
+import com.books.utility.CommonMethods;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

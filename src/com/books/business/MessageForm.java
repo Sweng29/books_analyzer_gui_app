@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.payroll.business;
+package com.books.business;
 
 /**
  *
@@ -35,7 +35,7 @@ public class MessageForm extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.header.setText(header);
         this.message.setText(message);
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/payroll/images/"+icon)));
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/books/images/"+icon)));
         jLabel2.requestFocus(true);
     }
     
@@ -120,7 +120,7 @@ public class MessageForm extends javax.swing.JFrame {
         message.setForeground(new java.awt.Color(255, 255, 255));
         message.setText("Message");
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/payroll/images/info.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/books/images/info.png")));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);

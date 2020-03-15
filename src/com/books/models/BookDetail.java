@@ -75,7 +75,11 @@ public class BookDetail {
     public void setPrice(Double price) {
         this.price = price;
     }
-    
+
+    @Override
+    public String toString() {
+        return "BookDetail{" + "bookId=" + bookId + ", title=" + title + ", keyword=" + keyword + ", bsr=" + bsr + ", noOfReviews=" + noOfReviews + ", dateOfPublication=" + dateOfPublication + ", price=" + price + '}';
+    }
     
     
 }

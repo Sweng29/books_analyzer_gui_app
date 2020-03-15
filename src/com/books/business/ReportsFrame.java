@@ -3,30 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.payroll.business;
+package com.books.business;
 
-import com.books.utility.CommonMethods;
-import com.books.utility.ExcelUtility;
 import java.sql.ResultSet;
-import java.text.SimpleDateFormat;
-import javax.swing.JFileChooser;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 
 /**
  *
  * @author Kashif Alei
  */
-public class CSVLoaderFrame extends javax.swing.JFrame {
+public class ReportsFrame extends javax.swing.JFrame {
 
-    /**
-     * Creates new form CSVLoaderFrame
-     */
-    
-    public CSVLoaderFrame() {
+    public ReportsFrame() {
         initComponents();
-        this.setLocationRelativeTo(null);
         populateAttendanceTable();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -42,11 +32,12 @@ public class CSVLoaderFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        attendanceSearch = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         attendanceTable = new javax.swing.JTable();
-        csvLoaderBtn = new javax.swing.JLabel();
+        searchBtn = new javax.swing.JLabel();
+        resetBtn = new javax.swing.JLabel();
+        searchBox = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -59,7 +50,7 @@ public class CSVLoaderFrame extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("CSV Loader");
+        jLabel1.setText("Reports");
 
         jLabel2.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -78,8 +69,8 @@ public class CSVLoaderFrame extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(552, 552, 552)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 518, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 554, Short.MAX_VALUE)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -109,24 +100,6 @@ public class CSVLoaderFrame extends javax.swing.JFrame {
         });
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel4.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Search");
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 40, -1, 26));
-
-        attendanceSearch.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
-        attendanceSearch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                attendanceSearchActionPerformed(evt);
-            }
-        });
-        attendanceSearch.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                attendanceSearchKeyReleased(evt);
-            }
-        });
-        jPanel2.add(attendanceSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 40, 220, -1));
-
         attendanceTable.setFont(new java.awt.Font("Century Gothic", 0, 17)); // NOI18N
         attendanceTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -153,21 +126,50 @@ public class CSVLoaderFrame extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(attendanceTable);
 
-        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(625, 75, 720, 580));
+        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(365, 45, 990, 610));
 
-        csvLoaderBtn.setBackground(new java.awt.Color(53, 168, 83));
-        csvLoaderBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        csvLoaderBtn.setForeground(new java.awt.Color(255, 255, 255));
-        csvLoaderBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        csvLoaderBtn.setText("Select File");
-        csvLoaderBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        csvLoaderBtn.setOpaque(true);
-        csvLoaderBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+        searchBtn.setBackground(new java.awt.Color(53, 168, 83));
+        searchBtn.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
+        searchBtn.setForeground(new java.awt.Color(255, 255, 255));
+        searchBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        searchBtn.setText("Search");
+        searchBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        searchBtn.setOpaque(true);
+        searchBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                csvLoaderBtnMouseClicked(evt);
+                searchBtnMouseClicked(evt);
             }
         });
-        jPanel2.add(csvLoaderBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 170, 40));
+        jPanel2.add(searchBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 138, 30));
+
+        resetBtn.setBackground(new java.awt.Color(53, 168, 83));
+        resetBtn.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
+        resetBtn.setForeground(new java.awt.Color(255, 255, 255));
+        resetBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        resetBtn.setText("Reset");
+        resetBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        resetBtn.setOpaque(true);
+        resetBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                resetBtnMouseClicked(evt);
+            }
+        });
+        jPanel2.add(resetBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 300, 160, 30));
+
+        searchBox.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        searchBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Choose option", "Present Employees", "Absent Employees" }));
+        searchBox.setToolTipText("");
+        searchBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                searchBoxItemStateChanged(evt);
+            }
+        });
+        jPanel2.add(searchBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 180, 210, 30));
+
+        jLabel5.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("Search by.");
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(17, 180, 100, 30));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 1370, 670));
 
@@ -178,46 +180,39 @@ public class CSVLoaderFrame extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jLabel2MouseClicked
 
-    private void attendanceSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attendanceSearchActionPerformed
-
-    }//GEN-LAST:event_attendanceSearchActionPerformed
-
-    private void attendanceSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_attendanceSearchKeyReleased
-        CommonMethods.searchFromTable(attendanceTable, attendanceSearch);
-    }//GEN-LAST:event_attendanceSearchKeyReleased
-
     private void attendanceTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_attendanceTableMouseClicked
         
     }//GEN-LAST:event_attendanceTableMouseClicked
 
     private void attendanceTableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_attendanceTableMouseReleased
-
+      
     }//GEN-LAST:event_attendanceTableMouseReleased
+
+    private void searchBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchBtnMouseClicked
+        searchReports();
+    }//GEN-LAST:event_searchBtnMouseClicked
+
+    private void resetBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetBtnMouseClicked
+        clearFields();
+    }//GEN-LAST:event_resetBtnMouseClicked
 
     private void jPanel2MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseDragged
         // TODO add your handling code here:
     }//GEN-LAST:event_jPanel2MouseDragged
 
     private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseClicked
-
+        
     }//GEN-LAST:event_jPanel2MouseClicked
 
-    private void csvLoaderBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_csvLoaderBtnMouseClicked
-        UIManager.put("FileChooser.cancelButtonText", "Cancel");
-        UIManager.put("FileChooser.saveButtonText", "Select File");
-        JFileChooser fileChooser = new JFileChooser("d:");
-        SwingUtilities.updateComponentTreeUI(fileChooser);
-        int r = fileChooser.showSaveDialog(null);   
-        // if the user selects a file 
-        if (r == JFileChooser.APPROVE_OPTION) { 
-            System.out.println(fileChooser.getSelectedFile().getAbsolutePath());
-            String filePath = fileChooser.getSelectedFile().getAbsolutePath();
-            ExcelUtility.readFromExcel(filePath);
-        } // if the user cancelled the operation 
-        else {
-            System.out.println("The user cancelled the operation.");
+    private void searchBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_searchBoxItemStateChanged
+        if(searchBox.getSelectedIndex() == 0)
+        {
+            populateAttendanceTable();
+        }else
+        {
+            searchReports();
         }
-    }//GEN-LAST:event_csvLoaderBtnMouseClicked
+    }//GEN-LAST:event_searchBoxItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -236,39 +231,75 @@ public class CSVLoaderFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CSVLoaderFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ReportsFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CSVLoaderFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ReportsFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CSVLoaderFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ReportsFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CSVLoaderFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ReportsFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CSVLoaderFrame().setVisible(true);
+                new ReportsFrame().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField attendanceSearch;
     private javax.swing.JTable attendanceTable;
-    private javax.swing.JLabel csvLoaderBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel resetBtn;
+    private javax.swing.JComboBox<String> searchBox;
+    private javax.swing.JLabel searchBtn;
     // End of variables declaration//GEN-END:variables
 
     private void populateAttendanceTable() {
-        //ResultSet resultSet = attendanceDAO.findAll();
-        //CommonMethods.fillTables(resultSet, attendanceTable, jScrollPane2, this);
+//        ResultSet resultSet = new AttendanceDAOImpl().findAll();
+//        CommonMethods.fillTables(resultSet, attendanceTable, jScrollPane2, this);
+    }
+
+    private void clearFields() {
+        searchBox.setSelectedIndex(0);
+        attendanceTable.clearSelection();
+        populateAttendanceTable();
+    }
+
+    private void populateAttendanceWithSearchResults(ResultSet resultSet) {
+//        CommonMethods.fillTables(resultSet, attendanceTable, jScrollPane2, this);
+    }
+
+    private void searchReports() {
+        if(searchBtn.isEnabled()){
+            ResultSet resultSet = null;
+            if(searchBox.getSelectedIndex() == 0)
+            {
+                new MessageForm("Error","Please select a criteria to search.","error.png").setVisible(true);
+                return;
+            }
+            else if(searchBox.getSelectedIndex() == 1)
+            {
+//                resultSet = new AttendanceDAOImpl().findByMostPresentEmployee();
+                
+            }else if(searchBox.getSelectedIndex() == 2)
+            {
+//                resultSet = new AttendanceDAOImpl().findByMostAbsentEmployees();
+            }
+            if(resultSet!=null)
+            {
+                populateAttendanceWithSearchResults(resultSet);
+            }else
+            {
+                new MessageForm("Error","No record found.","error.png").setVisible(true);
+            }
+        }
     }
 }

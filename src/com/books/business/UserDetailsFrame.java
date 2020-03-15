@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.payroll.business;
+package com.books.business;
 
-import com.payroll.dao.UserDAO;
-import com.payroll.daoimpl.UserDaoImpl;
-import com.payroll.models.User;
+import com.books.daoimpl.UserDaoImpl;
+import com.books.models.User;
+
 
 /**
  *
@@ -64,7 +64,6 @@ public class UserDetailsFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1370, 760));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(1370, 760));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(53, 168, 83));

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.payroll.business;
+package com.books.business;
 
 import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
