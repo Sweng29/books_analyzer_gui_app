@@ -116,7 +116,8 @@ public class BookDetailDAOImpl implements GenericDAO<BookDetail>{
     
     public ResultSet findAllAnalysedData(String date) {
         String query = "select\n"
-                + "	bd.title as 'Keyword',\n"
+                + "bd.id as 'ID',"
+                + "	bd.keyword as 'Keyword',\n"
                 + "	count(*) as 'Profitable books',curdate() as 'Analysis Date'\n"
                 + "from\n"
                 + "	book_details bd\n"
@@ -138,6 +139,21 @@ public class BookDetailDAOImpl implements GenericDAO<BookDetail>{
             ps = connection.prepareStatement(query);
             return ps.executeQuery();
             
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+            new MessageForm("Error", e.toString(), "error.png").setVisible(true);
+        }
+        return null;
+    }
+    
+    public Integer deleteAll() {
+        String query = "DELETE FROM book_details;";
+        try{
+            connection = DBConnection.getInstance();
+            ps = connection.prepareStatement(query);
+            ps.executeUpdate();
+            return 1;
         }catch(Exception e)
         {
             e.printStackTrace();

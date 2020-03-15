@@ -12,7 +12,9 @@ import com.books.models.AnalysedData;
 import com.books.models.BookDetail;
 import com.books.utility.CommonMethods;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.JTable;
@@ -22,22 +24,16 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Kashif Alei
  */
-public class ReportsFrame extends javax.swing.JFrame {
+public class AnalysedDataFrame extends javax.swing.JFrame {
 
     private BookDetailDAOImpl bookDetailDAO;
-    public ReportsFrame() {
+    public AnalysedDataFrame() {
         initComponents();
         bookDetailDAO = new BookDetailDAOImpl();
         populateAttendanceTable();
         this.setLocationRelativeTo(null);
     }
     
-    public ReportsFrame(ResultSet resultSet) {
-        initComponents();
-        bookDetailDAO = new BookDetailDAOImpl();
-        populateAttendanceTable(resultSet);
-        this.setLocationRelativeTo(null);
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -54,8 +50,10 @@ public class ReportsFrame extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         analysedDataTable = new javax.swing.JTable();
-        saveAnalysedDataBtn = new javax.swing.JLabel();
         analysisBtn = new javax.swing.JLabel();
+        dateField = new com.toedter.calendar.JDateChooser();
+        analysisDeleteAllBtn = new javax.swing.JLabel();
+        analysisDeleteByDateBtn = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -68,7 +66,7 @@ public class ReportsFrame extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Century Gothic", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Reports");
+        jLabel1.setText("Previous Reports");
 
         jLabel2.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
@@ -144,27 +142,13 @@ public class ReportsFrame extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(analysedDataTable);
 
-        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 75, 1340, 580));
-
-        saveAnalysedDataBtn.setBackground(new java.awt.Color(53, 168, 83));
-        saveAnalysedDataBtn.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
-        saveAnalysedDataBtn.setForeground(new java.awt.Color(255, 255, 255));
-        saveAnalysedDataBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        saveAnalysedDataBtn.setText("Save Analysed Data");
-        saveAnalysedDataBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        saveAnalysedDataBtn.setOpaque(true);
-        saveAnalysedDataBtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                saveAnalysedDataBtnMouseClicked(evt);
-            }
-        });
-        jPanel2.add(saveAnalysedDataBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 30, 170, 30));
+        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 135, 1340, 520));
 
         analysisBtn.setBackground(new java.awt.Color(53, 168, 83));
         analysisBtn.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
         analysisBtn.setForeground(new java.awt.Color(255, 255, 255));
         analysisBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        analysisBtn.setText("Analyse todays data");
+        analysisBtn.setText("Search");
         analysisBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         analysisBtn.setOpaque(true);
         analysisBtn.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -172,7 +156,38 @@ public class ReportsFrame extends javax.swing.JFrame {
                 analysisBtnMouseClicked(evt);
             }
         });
-        jPanel2.add(analysisBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 180, 30));
+        jPanel2.add(analysisBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 130, 30));
+
+        dateField.setDateFormatString("yyyy-MM-dd");
+        jPanel2.add(dateField, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 210, 30));
+
+        analysisDeleteAllBtn.setBackground(new java.awt.Color(53, 168, 83));
+        analysisDeleteAllBtn.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
+        analysisDeleteAllBtn.setForeground(new java.awt.Color(255, 255, 255));
+        analysisDeleteAllBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        analysisDeleteAllBtn.setText("Delete all");
+        analysisDeleteAllBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        analysisDeleteAllBtn.setOpaque(true);
+        analysisDeleteAllBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                analysisDeleteAllBtnMouseClicked(evt);
+            }
+        });
+        jPanel2.add(analysisDeleteAllBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 80, 130, 30));
+
+        analysisDeleteByDateBtn.setBackground(new java.awt.Color(53, 168, 83));
+        analysisDeleteByDateBtn.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
+        analysisDeleteByDateBtn.setForeground(new java.awt.Color(255, 255, 255));
+        analysisDeleteByDateBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        analysisDeleteByDateBtn.setText("Delete By Date");
+        analysisDeleteByDateBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        analysisDeleteByDateBtn.setOpaque(true);
+        analysisDeleteByDateBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                analysisDeleteByDateBtnMouseClicked(evt);
+            }
+        });
+        jPanel2.add(analysisDeleteByDateBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 80, 130, 30));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 1370, 670));
 
@@ -191,10 +206,6 @@ public class ReportsFrame extends javax.swing.JFrame {
       
     }//GEN-LAST:event_analysedDataTableMouseReleased
 
-    private void saveAnalysedDataBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveAnalysedDataBtnMouseClicked
-        saveRecord();
-    }//GEN-LAST:event_saveAnalysedDataBtnMouseClicked
-
     private void jPanel2MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseDragged
         // TODO add your handling code here:
     }//GEN-LAST:event_jPanel2MouseDragged
@@ -204,8 +215,43 @@ public class ReportsFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel2MouseClicked
 
     private void analysisBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_analysisBtnMouseClicked
-        CommonMethods.fillTables(bookDetailDAO.findAllAnalysedData(""), analysedDataTable, jScrollPane2, this);
+        if(dateField.getDate()!=null)
+        {
+            String date = new SimpleDateFormat("yyyy-MM-dd").format(dateField.getDate());
+            ResultSet resultSet = new AnalysedDataDAOImpl().findAllByAnalysisDate(date);
+            CommonMethods.fillTables(resultSet, analysedDataTable, jScrollPane2, this);
+        }else{
+            new MessageForm("Error", "Please select a date.", "error.png").setVisible(true);
+        }
     }//GEN-LAST:event_analysisBtnMouseClicked
+
+    private void analysisDeleteAllBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_analysisDeleteAllBtnMouseClicked
+        Integer i = new AnalysedDataDAOImpl().deleteAllPreviousRecords();
+            if(i==1)
+            {
+                new MessageForm("Success", "Deleted Successfully.", "info.png").setVisible(true);
+                populateAttendanceTable();
+            }else{
+                new MessageForm("Error", "Colud not delete.", "error.png").setVisible(true);
+            }
+    }//GEN-LAST:event_analysisDeleteAllBtnMouseClicked
+
+    private void analysisDeleteByDateBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_analysisDeleteByDateBtnMouseClicked
+        if(dateField.getDate()!=null)
+        {
+            String date = new SimpleDateFormat("yyyy-MM-dd").format(dateField.getDate());
+            Integer i = new AnalysedDataDAOImpl().deleteByDate(date);
+            if(i==1)
+            {
+                new MessageForm("Success", "Deleted Successfully.", "info.png").setVisible(true);
+                populateAttendanceTable();
+            }else{
+                new MessageForm("Error", "Colud not delete.", "error.png").setVisible(true);
+            }
+        }else{
+            new MessageForm("Error", "Please select a date.", "error.png").setVisible(true);
+        }
+    }//GEN-LAST:event_analysisDeleteByDateBtnMouseClicked
 
     /**
      * @param args the command line arguments
@@ -224,20 +270,21 @@ public class ReportsFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ReportsFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AnalysedDataFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ReportsFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AnalysedDataFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ReportsFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AnalysedDataFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ReportsFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AnalysedDataFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ReportsFrame().setVisible(true);
+                new AnalysedDataFrame().setVisible(true);
             }
         });
     }
@@ -245,17 +292,19 @@ public class ReportsFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable analysedDataTable;
     private javax.swing.JLabel analysisBtn;
+    private javax.swing.JLabel analysisDeleteAllBtn;
+    private javax.swing.JLabel analysisDeleteByDateBtn;
+    private com.toedter.calendar.JDateChooser dateField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel saveAnalysedDataBtn;
     // End of variables declaration//GEN-END:variables
 
     private void populateAttendanceTable() {
-//        ResultSet resultSet = new AttendanceDAOImpl().findAll();
-//        CommonMethods.fillTables(resultSet, attendanceTable, jScrollPane2, this);
+        ResultSet resultSet = new AnalysedDataDAOImpl().findAll();
+        CommonMethods.fillTables(resultSet, analysedDataTable, jScrollPane2, this);
     }
 
     private void clearFields() {
@@ -268,16 +317,7 @@ public class ReportsFrame extends javax.swing.JFrame {
     }
 
     private void searchReports() {
-        if(saveAnalysedDataBtn.isEnabled()){
-            ResultSet resultSet = null;
-            if(resultSet!=null)
-            {
-                populateAttendanceWithSearchResults(resultSet);
-            }else
-            {
-                new MessageForm("Error","No record found.","error.png").setVisible(true);
-            }
-        }
+        
     }
 
     private void populateAttendanceTable(ResultSet resultSet) {

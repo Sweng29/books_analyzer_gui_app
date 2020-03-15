@@ -96,6 +96,7 @@ public BoxLayout box;
         usersBtn = new javax.swing.JLabel();
         analyzerBtn = new javax.swing.JLabel();
         csvLoaderBtn = new javax.swing.JLabel();
+        previousAnalysedDataBtn = new javax.swing.JLabel();
         jPanel_UP = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -125,7 +126,7 @@ public BoxLayout box;
                 usersBtnMouseClicked(evt);
             }
         });
-        jPanel2.add(usersBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 420, 340, 90));
+        jPanel2.add(usersBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 280, 390, 90));
 
         analyzerBtn.setBackground(new java.awt.Color(53, 168, 83));
         analyzerBtn.setFont(new java.awt.Font("Century Gothic", 0, 48)); // NOI18N
@@ -139,7 +140,7 @@ public BoxLayout box;
                 analyzerBtnMouseClicked(evt);
             }
         });
-        jPanel2.add(analyzerBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 230, 340, 90));
+        jPanel2.add(analyzerBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 50, 390, 90));
 
         csvLoaderBtn.setBackground(new java.awt.Color(53, 168, 83));
         csvLoaderBtn.setFont(new java.awt.Font("Century Gothic", 0, 48)); // NOI18N
@@ -153,7 +154,21 @@ public BoxLayout box;
                 csvLoaderBtnMouseClicked(evt);
             }
         });
-        jPanel2.add(csvLoaderBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 50, 340, 90));
+        jPanel2.add(csvLoaderBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 490, 90));
+
+        previousAnalysedDataBtn.setBackground(new java.awt.Color(53, 168, 83));
+        previousAnalysedDataBtn.setFont(new java.awt.Font("Century Gothic", 0, 48)); // NOI18N
+        previousAnalysedDataBtn.setForeground(new java.awt.Color(255, 255, 255));
+        previousAnalysedDataBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        previousAnalysedDataBtn.setText("View Analysed Data");
+        previousAnalysedDataBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        previousAnalysedDataBtn.setOpaque(true);
+        previousAnalysedDataBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                previousAnalysedDataBtnMouseClicked(evt);
+            }
+        });
+        jPanel2.add(previousAnalysedDataBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, 490, 90));
 
         jPanel_Center.add(jPanel2, java.awt.BorderLayout.CENTER);
 
@@ -232,6 +247,10 @@ public BoxLayout box;
         new CSVLoaderFrame().setVisible(true);
     }//GEN-LAST:event_csvLoaderBtnMouseClicked
 
+    private void previousAnalysedDataBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_previousAnalysedDataBtnMouseClicked
+        new AnalysedDataFrame().setVisible(true);
+    }//GEN-LAST:event_previousAnalysedDataBtnMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -259,6 +278,7 @@ public BoxLayout box;
     private javax.swing.JPanel jPanel_Center;
     private javax.swing.JPanel jPanel_Down;
     private javax.swing.JPanel jPanel_UP;
+    private javax.swing.JLabel previousAnalysedDataBtn;
     private javax.swing.JLabel userName;
     private javax.swing.JLabel usersBtn;
     // End of variables declaration//GEN-END:variables

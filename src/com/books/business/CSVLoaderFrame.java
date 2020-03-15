@@ -30,7 +30,7 @@ public class CSVLoaderFrame extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         bookDetailDAO = new BookDetailDAOImpl();
-        populateAttendanceTable();
+        populateCSVTable();
     }
 
     /**
@@ -42,6 +42,15 @@ public class CSVLoaderFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        confirmDeleteDialog = new javax.swing.JDialog();
+        jPanel3 = new javax.swing.JPanel();
+        header = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        message = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -51,6 +60,92 @@ public class CSVLoaderFrame extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         csvTable = new javax.swing.JTable();
         csvLoaderBtn = new javax.swing.JLabel();
+        analysisBtn = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        deletePreviousDataBtn = new javax.swing.JLabel();
+        deletePreviousDataBtn1 = new javax.swing.JLabel();
+
+        confirmDeleteDialog.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        confirmDeleteDialog.setUndecorated(true);
+        confirmDeleteDialog.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel3.setBackground(new java.awt.Color(11, 18, 29));
+
+        header.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        header.setForeground(new java.awt.Color(140, 198, 62));
+        header.setText("Delete All Records");
+
+        jLabel3.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("X");
+        jLabel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 311, Short.MAX_VALUE)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addComponent(header, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        confirmDeleteDialog.getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 540, -1));
+
+        jPanel4.setBackground(new java.awt.Color(47, 55, 67));
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel6.setBackground(new java.awt.Color(140, 198, 62));
+        jLabel6.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("DELETE");
+        jLabel6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel6.setOpaque(true);
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel6MouseClicked(evt);
+            }
+        });
+        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 150, 85, 31));
+
+        message.setBackground(new java.awt.Color(255, 255, 255));
+        message.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
+        message.setForeground(new java.awt.Color(255, 255, 255));
+        message.setText("Are you sure you want to delete all previous records?");
+        jPanel4.add(message, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 10, 399, 96));
+
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/books/images/info.png")));
+        jPanel4.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 100, 80));
+
+        jLabel8.setBackground(new java.awt.Color(255, 0, 51));
+        jLabel8.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("CANCEL");
+        jLabel8.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel8.setOpaque(true);
+        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel8MouseClicked(evt);
+            }
+        });
+        jPanel4.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 150, 85, 31));
+
+        confirmDeleteDialog.getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 540, 200));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -114,9 +209,10 @@ public class CSVLoaderFrame extends javax.swing.JFrame {
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel4.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 0, 51));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Search");
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 40, -1, 26));
+        jLabel4.setText("Please delete the data once analysed.");
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 30, 290, 26));
 
         attendanceSearch.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
         attendanceSearch.addActionListener(new java.awt.event.ActionListener() {
@@ -157,10 +253,10 @@ public class CSVLoaderFrame extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(csvTable);
 
-        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 75, 1330, 580));
+        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 1330, 580));
 
         csvLoaderBtn.setBackground(new java.awt.Color(53, 168, 83));
-        csvLoaderBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        csvLoaderBtn.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         csvLoaderBtn.setForeground(new java.awt.Color(255, 255, 255));
         csvLoaderBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         csvLoaderBtn.setText("Select File");
@@ -171,7 +267,54 @@ public class CSVLoaderFrame extends javax.swing.JFrame {
                 csvLoaderBtnMouseClicked(evt);
             }
         });
-        jPanel2.add(csvLoaderBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 170, 40));
+        jPanel2.add(csvLoaderBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 170, 30));
+
+        analysisBtn.setBackground(new java.awt.Color(53, 168, 83));
+        analysisBtn.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
+        analysisBtn.setForeground(new java.awt.Color(255, 255, 255));
+        analysisBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        analysisBtn.setText("Analyse data");
+        analysisBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        analysisBtn.setOpaque(true);
+        analysisBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                analysisBtnMouseClicked(evt);
+            }
+        });
+        jPanel2.add(analysisBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 30, 180, 30));
+
+        jLabel5.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("Search");
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 40, -1, 26));
+
+        deletePreviousDataBtn.setBackground(new java.awt.Color(53, 168, 83));
+        deletePreviousDataBtn.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
+        deletePreviousDataBtn.setForeground(new java.awt.Color(255, 255, 255));
+        deletePreviousDataBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        deletePreviousDataBtn.setText("Delete Previous Data");
+        deletePreviousDataBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        deletePreviousDataBtn.setOpaque(true);
+        deletePreviousDataBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deletePreviousDataBtnMouseClicked(evt);
+            }
+        });
+        jPanel2.add(deletePreviousDataBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 30, 180, 30));
+
+        deletePreviousDataBtn1.setBackground(new java.awt.Color(53, 168, 83));
+        deletePreviousDataBtn1.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
+        deletePreviousDataBtn1.setForeground(new java.awt.Color(255, 255, 255));
+        deletePreviousDataBtn1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        deletePreviousDataBtn1.setText("Refresh Data");
+        deletePreviousDataBtn1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        deletePreviousDataBtn1.setOpaque(true);
+        deletePreviousDataBtn1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deletePreviousDataBtn1MouseClicked(evt);
+            }
+        });
+        jPanel2.add(deletePreviousDataBtn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 30, 120, 30));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 1370, 670));
 
@@ -216,13 +359,50 @@ public class CSVLoaderFrame extends javax.swing.JFrame {
         if (r == JFileChooser.APPROVE_OPTION) { 
             System.out.println(fileChooser.getSelectedFile().getAbsolutePath());
             String filePath = fileChooser.getSelectedFile().getAbsolutePath();
-            ExcelUtility.readFromExcel(filePath);
-            populateAttendanceTable();
+            if(filePath.endsWith(".xlsx"))
+            {
+                ExcelUtility.readFromExcel(filePath);
+                populateCSVTable();   
+            }else{
+                new MessageForm("Error", "Only xlsx files are allowed.", "error.png").setVisible(true);
+            }
         } // if the user cancelled the operation 
         else {
             System.out.println("The user cancelled the operation.");
         }
     }//GEN-LAST:event_csvLoaderBtnMouseClicked
+
+    private void analysisBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_analysisBtnMouseClicked
+        ResultSet resultSet = new BookDetailDAOImpl().findAllAnalysedData("");
+        new ReportsFrame(resultSet).setVisible(true);
+    }//GEN-LAST:event_analysisBtnMouseClicked
+
+    private void deletePreviousDataBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deletePreviousDataBtnMouseClicked
+        new DeleteMessageForm("Delete All Records", "Do you want to delete all records?", "info.png").setVisible(true);
+        if(DeleteMessageForm.check==1)
+        {
+            populateCSVTable();
+        }
+    }//GEN-LAST:event_deletePreviousDataBtnMouseClicked
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        this.dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel3MouseClicked
+
+    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+//        confirmDeleteDialog.dispose();
+//        new BookDetailDAOImpl().deleteAll();
+//        new MessageForm("Success", "Deleted successfully.", "success.png").setVisible(true);
+//        populateCSVTable();
+    }//GEN-LAST:event_jLabel6MouseClicked
+
+    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel8MouseClicked
+
+    private void deletePreviousDataBtn1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deletePreviousDataBtn1MouseClicked
+        populateCSVTable();
+    }//GEN-LAST:event_deletePreviousDataBtn1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -261,18 +441,31 @@ public class CSVLoaderFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel analysisBtn;
     private javax.swing.JTextField attendanceSearch;
+    private javax.swing.JDialog confirmDeleteDialog;
     private javax.swing.JLabel csvLoaderBtn;
     private javax.swing.JTable csvTable;
+    private javax.swing.JLabel deletePreviousDataBtn;
+    private javax.swing.JLabel deletePreviousDataBtn1;
+    private javax.swing.JLabel header;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel message;
     // End of variables declaration//GEN-END:variables
 
-    private void populateAttendanceTable() {
+    private void populateCSVTable() {
         ResultSet resultSet = bookDetailDAO.findAll();
         CommonMethods.fillTables(resultSet, csvTable, jScrollPane2, this);
     }
