@@ -19,6 +19,7 @@ public class BookDetail {
     private Integer noOfReviews;
     private String dateOfPublication;
     private Double price;
+    private String publisher;
 
     public Integer getBookId() {
         return bookId;
@@ -76,10 +77,17 @@ public class BookDetail {
         this.price = price;
     }
 
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
     @Override
     public String toString() {
-        return "BookDetail{" + "bookId=" + bookId + ", title=" + title + ", keyword=" + keyword + ", bsr=" + bsr + ", noOfReviews=" + noOfReviews + ", dateOfPublication=" + dateOfPublication + ", price=" + price + '}';
-    }
-    
+        return "BookDetail{" + "bookId=" + bookId + ", title=" + title + ", keyword=" + keyword + ", bsr=" + bsr + ", noOfReviews=" + noOfReviews + ", dateOfPublication=" + dateOfPublication + ", price=" + price + ", publisher=" + publisher + '}';
+    }    
     
 }

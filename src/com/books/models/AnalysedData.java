@@ -5,6 +5,8 @@
  */
 package com.books.models;
 
+import java.util.Comparator;
+
 /**
  *
  * @author Kashif Alei
@@ -47,6 +49,5 @@ public class AnalysedData {
     public void setAnalysisDate(String analysisDate) {
         this.analysisDate = analysisDate;
     }
-    
     
 }

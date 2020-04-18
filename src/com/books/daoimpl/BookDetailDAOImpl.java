@@ -30,8 +30,8 @@ public class BookDetailDAOImpl implements GenericDAO<BookDetail>{
     @Override
     public Integer save(BookDetail entity) {
         String query = "INSERT INTO books_db.book_details\n" +
-                       "(title, keyword, bsr, no_of_reviews, date_of_publication, price,created_date)\n" +
-                       "VALUES(?, ?, ?, ?, ?, ?,?);";
+                       "(title, keyword, bsr, no_of_reviews, date_of_publication, price,created_date,publisher)\n" +
+                       "VALUES(?, ?, ?, ?, ?, ?,?,?);";
         try{
             connection = DBConnection.getInstance();
             //String date = simpleDateFormat.format(entity.getDateOfPublication());
@@ -43,6 +43,7 @@ public class BookDetailDAOImpl implements GenericDAO<BookDetail>{
             ps.setString(5, entity.getDateOfPublication());
             ps.setDouble(6, entity.getPrice());
             ps.setString(7, new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+            ps.setString(8, entity.getPublisher());
             return ps.executeUpdate(); 
         }catch(Exception e)
         {
@@ -71,12 +72,13 @@ public class BookDetailDAOImpl implements GenericDAO<BookDetail>{
                 + "	bd.no_of_reviews as 'No Of Reviews',\n"
                 + "	bd.date_of_publication as 'Publication Date',\n"
                 + "	bd.price as 'Price',\n"
+                + "	bd.publisher as 'Publisher',\n"
                 + "	bd.created_date as 'Loaded On'\n"
                 + "from\n"
                 + "	book_details bd where \n"
                 +"	bd.created_date = curdate()\n"
                 + "order by\n"
-                + "	bd.created_date desc;";
+                + "	bd.keyword,bd.created_date desc;";
         try{
             connection = DBConnection.getInstance();
             //String date = simpleDateFormat.format(entity.getDateOfPublication());
@@ -125,12 +127,13 @@ public class BookDetailDAOImpl implements GenericDAO<BookDetail>{
                 + "	bd.bsr < 100000\n"
                 + "	and(\n"
                 + "		bd.no_of_reviews > 0\n"
-                + "		and bd.no_of_reviews < 100\n"
+                + "		and bd.no_of_reviews < 120\n"
                 + "	)\n"
                 + "	and datediff(CURDATE(),bd.date_of_publication) > 30\n"
                 + "	and bd.price > 0\n"
+                + "	and bd.publisher like '%self publisher%' \n"
                 + "group by\n"
-                + "	bd.title\n"
+                + "	bd.keyword\n"
                 + "order by\n"
                 + "	count(*) desc;";
         try{

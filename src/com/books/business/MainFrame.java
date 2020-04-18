@@ -94,7 +94,6 @@ public BoxLayout box;
         jPanel_Center = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         usersBtn = new javax.swing.JLabel();
-        analyzerBtn = new javax.swing.JLabel();
         csvLoaderBtn = new javax.swing.JLabel();
         previousAnalysedDataBtn = new javax.swing.JLabel();
         jPanel_UP = new javax.swing.JPanel();
@@ -126,27 +125,13 @@ public BoxLayout box;
                 usersBtnMouseClicked(evt);
             }
         });
-        jPanel2.add(usersBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 280, 390, 90));
-
-        analyzerBtn.setBackground(new java.awt.Color(53, 168, 83));
-        analyzerBtn.setFont(new java.awt.Font("Century Gothic", 0, 48)); // NOI18N
-        analyzerBtn.setForeground(new java.awt.Color(255, 255, 255));
-        analyzerBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        analyzerBtn.setText("Analyse Data");
-        analyzerBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        analyzerBtn.setOpaque(true);
-        analyzerBtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                analyzerBtnMouseClicked(evt);
-            }
-        });
-        jPanel2.add(analyzerBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 50, 390, 90));
+        jPanel2.add(usersBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 350, 620, 90));
 
         csvLoaderBtn.setBackground(new java.awt.Color(53, 168, 83));
         csvLoaderBtn.setFont(new java.awt.Font("Century Gothic", 0, 48)); // NOI18N
         csvLoaderBtn.setForeground(new java.awt.Color(255, 255, 255));
         csvLoaderBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        csvLoaderBtn.setText("Load CSV");
+        csvLoaderBtn.setText("Load CSV / Analyse Data");
         csvLoaderBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         csvLoaderBtn.setOpaque(true);
         csvLoaderBtn.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -154,7 +139,7 @@ public BoxLayout box;
                 csvLoaderBtnMouseClicked(evt);
             }
         });
-        jPanel2.add(csvLoaderBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 490, 90));
+        jPanel2.add(csvLoaderBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 50, 620, 90));
 
         previousAnalysedDataBtn.setBackground(new java.awt.Color(53, 168, 83));
         previousAnalysedDataBtn.setFont(new java.awt.Font("Century Gothic", 0, 48)); // NOI18N
@@ -168,7 +153,7 @@ public BoxLayout box;
                 previousAnalysedDataBtnMouseClicked(evt);
             }
         });
-        jPanel2.add(previousAnalysedDataBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, 490, 90));
+        jPanel2.add(previousAnalysedDataBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 200, 620, 90));
 
         jPanel_Center.add(jPanel2, java.awt.BorderLayout.CENTER);
 
@@ -216,7 +201,7 @@ public BoxLayout box;
 
         jLabel2.setFont(new java.awt.Font("Century Gothic", 0, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("All Right Reserved © 2019 ");
+        jLabel2.setText("All Right Reserved © 2020 ");
         jPanel_Down.add(jLabel2, new java.awt.GridBagConstraints());
 
         getContentPane().add(jPanel_Down, java.awt.BorderLayout.PAGE_END);
@@ -238,10 +223,6 @@ public BoxLayout box;
     private void usersBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_usersBtnMouseClicked
         new UserFrame().setVisible(true);
     }//GEN-LAST:event_usersBtnMouseClicked
-
-    private void analyzerBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_analyzerBtnMouseClicked
-        new ReportsFrame().setVisible(true);
-    }//GEN-LAST:event_analyzerBtnMouseClicked
 
     private void csvLoaderBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_csvLoaderBtnMouseClicked
         new CSVLoaderFrame().setVisible(true);
@@ -269,7 +250,6 @@ public BoxLayout box;
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel analyzerBtn;
     private javax.swing.JLabel csvLoaderBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

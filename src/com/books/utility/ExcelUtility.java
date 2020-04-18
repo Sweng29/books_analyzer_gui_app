@@ -21,8 +21,7 @@ import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;  
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFSheet;  
+import org.apache.poi.ss.usermodel.Workbook; 
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
@@ -37,6 +36,7 @@ public class ExcelUtility {
     public static final Integer IS_STRING = 1;
     public static final Integer IS_NUMERIC = 2;
     public static final Integer IS_BLANK = 3;
+    public static Integer totalRecordsSaved = 0;
     
     public static boolean readFromExcel(String filePath) {
         try {
@@ -45,7 +45,7 @@ public class ExcelUtility {
             Workbook workbook = new XSSFWorkbook(inputStream);
             Sheet firstSheet = workbook.getSheetAt(0);
             Iterator<Row> iterator = firstSheet.iterator();
-            int count = 0;
+            int count = 0,total = 0;
             List<BookDetail> loadedBooks = new ArrayList<BookDetail>();
             while (iterator.hasNext()) {
                 Row nextRow = iterator.next();
@@ -54,19 +54,20 @@ public class ExcelUtility {
                    count = 1;
                    continue;
                 }
+                count++;
                 BookDetail bookDetail = new BookDetail();
                 while (cellIterator.hasNext()) {
                     Cell cell = cellIterator.next();
                     if (cell == null || cell.getCellType() == Cell.CELL_TYPE_BLANK) {
                       continue;
                     }
-                    int check = check = checkCellType(cell);
+                    int check = checkCellType(cell);
                     int columnIndex = cell.getColumnIndex();
                     switch (columnIndex) {
                         case 0:
                             if(check==1)
                             {
-                                bookDetail.setKeyword(cell.getStringCellValue());
+                                bookDetail.setKeyword(cell.getStringCellValue().contains(",")?cell.getStringCellValue().replaceAll("[^a-zA-Z0-9]", ""):cell.getStringCellValue());
                             }else if(check==2){
                                 bookDetail.setKeyword(String.valueOf(cell.getNumericCellValue()));
                             }else{
@@ -87,7 +88,7 @@ public class ExcelUtility {
                         case 2:
                             if(check==1)
                             {
-                                bookDetail.setBsr(Long.valueOf(cell.getStringCellValue()));
+                                bookDetail.setBsr(Long.valueOf(cell.getStringCellValue().contains(",")?cell.getStringCellValue().replaceAll("[^a-zA-Z0-9]", ""):cell.getStringCellValue()));
                             }else if(check==2){
                                 bookDetail.setBsr(Long.valueOf(String.valueOf((int) cell.getNumericCellValue())));
                             }else{
@@ -97,7 +98,7 @@ public class ExcelUtility {
                         case 3:
                             if(check==1)
                             {
-                                bookDetail.setNoOfReviews(Integer.parseInt(cell.getStringCellValue()));
+                                bookDetail.setNoOfReviews(Integer.parseInt(cell.getStringCellValue().contains(",")?cell.getStringCellValue().replaceAll("[^a-zA-Z0-9]", ""):cell.getStringCellValue()));
                             }else if(check==2){
                                 bookDetail.setNoOfReviews(Integer.parseInt(String.valueOf((int) cell.getNumericCellValue())));
                             }else{
@@ -107,7 +108,7 @@ public class ExcelUtility {
                         case 4:
                             if(check==1)
                             {
-                                bookDetail.setDateOfPublication(cell.getStringCellValue());
+                                bookDetail.setDateOfPublication(cell.getStringCellValue().contains(",")?cell.getStringCellValue().replaceAll("[^a-zA-Z0-9]", ""):cell.getStringCellValue());
                             }else if(check==2){
                                 Date publicationDate= DateUtil.getJavaDate((double) cell.getNumericCellValue()); 
                                 bookDetail.setDateOfPublication(new SimpleDateFormat("yyyy-MM-dd").format(publicationDate));
@@ -118,9 +119,19 @@ public class ExcelUtility {
                         case 5:
                             if(check==1)
                             {
-                                bookDetail.setPrice(Double.valueOf(cell.getStringCellValue()));
+                                bookDetail.setPrice(Double.valueOf(cell.getStringCellValue().contains(",")?cell.getStringCellValue().replaceAll("[^a-zA-Z0-9]", ""):cell.getStringCellValue()));
                             }else if(check==2){
                                 bookDetail.setPrice(cell.getNumericCellValue());
+                            }else{
+                              continue;
+                            }
+                            break;
+                        case 6:
+                            if(check==1)
+                            {
+                                bookDetail.setPublisher(cell.getStringCellValue().contains(",")?cell.getStringCellValue().replaceAll("[^a-zA-Z0-9]", ""):cell.getStringCellValue());
+                            }else if(check==2){
+                                bookDetail.setPublisher(String.valueOf(cell.getNumericCellValue()));
                             }else{
                               continue;
                             }
@@ -136,6 +147,8 @@ public class ExcelUtility {
                 }
                 if(batch == 10)
                 {
+                    totalRecordsSaved +=batch;
+                    System.out.println("Total Records saved : "+totalRecordsSaved);
                     batch = 0;
                     saveRecord(loadedBooks);
                     count+=10;
@@ -144,12 +157,14 @@ public class ExcelUtility {
             }
             if(loadedBooks.size()>0)
             {
+                totalRecordsSaved +=loadedBooks.size();
+                System.out.println("Total Records saved : "+totalRecordsSaved);
                 saveRecord(loadedBooks);
                 count+=loadedBooks.size();
                 loadedBooks.clear();
             }
             count--;
-            new MessageForm("Success", count+" records have been loaded.", "info.png").setVisible(true);
+            new MessageForm("Success", totalRecordsSaved+" records have been loaded.", "info.png").setVisible(true);
             workbook.close();
             inputStream.close();
 
@@ -182,7 +197,7 @@ public class ExcelUtility {
 
     private static boolean isSavable(BookDetail bookDetail) {
         
-        if(bookDetail.getBsr()==null || bookDetail.getDateOfPublication()==null || bookDetail.getKeyword()==null || bookDetail.getNoOfReviews()==null || bookDetail.getPrice()==null)
+        if(bookDetail.getBsr()==null || bookDetail.getDateOfPublication()==null || bookDetail.getKeyword()==null || bookDetail.getNoOfReviews()==null || bookDetail.getPrice()==null || bookDetail.getPublisher()==null || bookDetail.getPrice() <=0)
         {
             return false;
         }

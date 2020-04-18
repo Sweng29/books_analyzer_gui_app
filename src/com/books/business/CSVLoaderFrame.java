@@ -7,14 +7,26 @@ package com.books.business;
 
 import com.books.dao.GenericDAO;
 import com.books.daoimpl.BookDetailDAOImpl;
+import com.books.models.AnalysedData;
 import com.books.models.BookDetail;
 import com.books.utility.CommonMethods;
 import com.books.utility.ExcelUtility;
 import java.sql.ResultSet;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import javax.swing.JFileChooser;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -373,8 +385,9 @@ public class CSVLoaderFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_csvLoaderBtnMouseClicked
 
     private void analysisBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_analysisBtnMouseClicked
-        ResultSet resultSet = new BookDetailDAOImpl().findAllAnalysedData("");
-        new ReportsFrame(resultSet).setVisible(true);
+        //ResultSet resultSet = new BookDetailDAOImpl().findAllAnalysedData("");
+        //new ReportsFrame(resultSet).setVisible(true);
+        analyseData();
     }//GEN-LAST:event_analysisBtnMouseClicked
 
     private void deletePreviousDataBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deletePreviousDataBtnMouseClicked
@@ -468,5 +481,80 @@ public class CSVLoaderFrame extends javax.swing.JFrame {
     private void populateCSVTable() {
         ResultSet resultSet = bookDetailDAO.findAll();
         CommonMethods.fillTables(resultSet, csvTable, jScrollPane2, this);
+    }
+
+    private void analyseData() {
+//        bd.bsr < 100000
+//	and bd.no_of_reviews > 0
+//	and bd.no_of_reviews < 120
+//	and datediff(
+//		curdate(),
+//		bd.date_of_publication
+//	)> 30
+//	and bd.price > 0
+//	and bd.publisher like '%self Publisher%'
+        ArrayList<AnalysedData> validBooks = new ArrayList<>();
+        Integer count = 0;
+        Integer totalBooks = 0;
+        SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
+        
+        Set<String> checkedKeywords = new HashSet<String>();
+        String currentDate = myFormat.format(new Date());
+        try {
+            for (int i = 0; i < csvTable.getRowCount(); i++) {
+                DefaultTableModel row = (DefaultTableModel) csvTable.getModel();
+                String previousKeyword = row.getValueAt(i, 2).toString().trim();
+                // Skip if already checked
+                if(checkedKeywords.contains(previousKeyword))
+                {
+                    continue;
+                }
+                String id = row.getValueAt(i, 0).toString();
+                checkedKeywords.add(previousKeyword);
+                Integer valid = 0;
+                boolean check = false;
+                long dateDiff = 0;
+               
+                // Iterate through all the matching keywords
+                for (int j = i; j < csvTable.getRowCount(); j++) {
+                    String keyword = row.getValueAt(j, 2).toString().trim();
+                    Integer bsr = Integer.parseInt(row.getValueAt(j, 3).toString());
+                    Integer reviews = Integer.parseInt(row.getValueAt(j, 4).toString());
+                    String publicationDate = row.getValueAt(j, 5).toString();
+                    Integer price = Integer.parseInt(row.getValueAt(j, 6).toString());
+                    String publisher = row.getValueAt(j, 7).toString();
+
+                    Date date1 = myFormat.parse(publicationDate);
+                    Date date2 = myFormat.parse(currentDate);
+                    long diff = date2.getTime() - date1.getTime();
+                    dateDiff = (TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS))+1;
+                    //System.out.println("Days: " + dateDiff);
+
+                    if (keyword.equals(previousKeyword)
+                            && bsr < 100000
+                            && price > 0
+                            && (reviews > 0 && reviews < 120)
+                            && dateDiff > 30
+                            && publisher.equalsIgnoreCase("self Publisher")) {
+                        valid++;
+                    }
+                    if (!keyword.equals(previousKeyword)) {
+                        break;
+                    }
+                }
+                AnalysedData analysedData = new AnalysedData();
+                analysedData.setAnalysedDataId(Integer.parseInt(id));
+                analysedData.setKeyword(previousKeyword);
+                analysedData.setProfitableBooks(valid.toString());
+                analysedData.setAnalysisDate(currentDate);
+                validBooks.add(analysedData);
+                valid = 0;
+                count++;
+            }
+            System.out.println(validBooks.size()+" Total");
+            new ReportsFrame(validBooks).setVisible(true);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }        
     }
 }

@@ -13,6 +13,8 @@ import com.books.models.BookDetail;
 import com.books.utility.CommonMethods;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.JTable;
@@ -38,6 +40,34 @@ public class ReportsFrame extends javax.swing.JFrame {
         populateAttendanceTable(resultSet);
         this.setLocationRelativeTo(null);
     }
+    
+    public ReportsFrame(ArrayList<AnalysedData> analysedDataList)
+    {
+        initComponents();
+        bookDetailDAO = new BookDetailDAOImpl();
+        this.setLocationRelativeTo(null);
+        String col[] = {"ID","Keyword","Profitable Books", "Analysis Date"};
+        DefaultTableModel tableModel = new DefaultTableModel(col, 0);        
+        System.err.println("Recieved : "+analysedDataList.size());
+        
+        Comparator<AnalysedData> comparator = new Comparator<AnalysedData>() {
+            @Override
+            public int compare(AnalysedData o1, AnalysedData o2) {
+                Integer book1 = Integer.parseInt(o1.getProfitableBooks());
+                Integer book2 = Integer.parseInt(o2.getProfitableBooks());
+                return book1.compareTo(book2);
+            }
+        };
+        
+        Collections.sort(analysedDataList,comparator);
+        Collections.reverse(analysedDataList);
+        for(int i=0;i<analysedDataList.size();i++)
+        {
+            Object [] obj = {analysedDataList.get(i).getAnalysedDataId(),analysedDataList.get(i).getKeyword(),analysedDataList.get(i).getProfitableBooks(),analysedDataList.get(i).getAnalysisDate()};
+            tableModel.addRow(obj);
+        }
+        analysedDataTable.setModel(tableModel);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -55,7 +85,6 @@ public class ReportsFrame extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         analysedDataTable = new javax.swing.JTable();
         saveAnalysedDataBtn = new javax.swing.JLabel();
-        analysisBtn = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setUndecorated(true);
@@ -158,21 +187,7 @@ public class ReportsFrame extends javax.swing.JFrame {
                 saveAnalysedDataBtnMouseClicked(evt);
             }
         });
-        jPanel2.add(saveAnalysedDataBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 30, 170, 30));
-
-        analysisBtn.setBackground(new java.awt.Color(53, 168, 83));
-        analysisBtn.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
-        analysisBtn.setForeground(new java.awt.Color(255, 255, 255));
-        analysisBtn.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        analysisBtn.setText("Analyse todays data");
-        analysisBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        analysisBtn.setOpaque(true);
-        analysisBtn.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                analysisBtnMouseClicked(evt);
-            }
-        });
-        jPanel2.add(analysisBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 180, 30));
+        jPanel2.add(saveAnalysedDataBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 170, 30));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 1370, 670));
 
@@ -202,10 +217,6 @@ public class ReportsFrame extends javax.swing.JFrame {
     private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseClicked
         
     }//GEN-LAST:event_jPanel2MouseClicked
-
-    private void analysisBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_analysisBtnMouseClicked
-        CommonMethods.fillTables(bookDetailDAO.findAllAnalysedData(""), analysedDataTable, jScrollPane2, this);
-    }//GEN-LAST:event_analysisBtnMouseClicked
 
     /**
      * @param args the command line arguments
@@ -244,7 +255,6 @@ public class ReportsFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable analysedDataTable;
-    private javax.swing.JLabel analysisBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
