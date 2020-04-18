@@ -484,15 +484,7 @@ public class CSVLoaderFrame extends javax.swing.JFrame {
     }
 
     private void analyseData() {
-//        bd.bsr < 100000
-//	and bd.no_of_reviews > 0
-//	and bd.no_of_reviews < 120
-//	and datediff(
-//		curdate(),
-//		bd.date_of_publication
-//	)> 30
-//	and bd.price > 0
-//	and bd.publisher like '%self Publisher%'
+
         ArrayList<AnalysedData> validBooks = new ArrayList<>();
         Integer count = 0;
         Integer totalBooks = 0;

@@ -11,13 +11,17 @@ import com.books.daoimpl.BookDetailDAOImpl;
 import com.books.models.AnalysedData;
 import com.books.models.BookDetail;
 import com.books.utility.CommonMethods;
+import java.awt.Color;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -46,8 +50,9 @@ public class ReportsFrame extends javax.swing.JFrame {
         initComponents();
         bookDetailDAO = new BookDetailDAOImpl();
         this.setLocationRelativeTo(null);
+        
         String col[] = {"ID","Keyword","Profitable Books", "Analysis Date"};
-        DefaultTableModel tableModel = new DefaultTableModel(col, 0);        
+        
         System.err.println("Recieved : "+analysedDataList.size());
         
         Comparator<AnalysedData> comparator = new Comparator<AnalysedData>() {
@@ -61,12 +66,9 @@ public class ReportsFrame extends javax.swing.JFrame {
         
         Collections.sort(analysedDataList,comparator);
         Collections.reverse(analysedDataList);
-        for(int i=0;i<analysedDataList.size();i++)
-        {
-            Object [] obj = {analysedDataList.get(i).getAnalysedDataId(),analysedDataList.get(i).getKeyword(),analysedDataList.get(i).getProfitableBooks(),analysedDataList.get(i).getAnalysisDate()};
-            tableModel.addRow(obj);
-        }
-        analysedDataTable.setModel(tableModel);
+        fillTablesWithList(analysedDataList,col,analysedDataTable, jScrollPane2, this);        
+        
+        //analysedDataTable.setModel(tableModel);
     }
 
     /**
@@ -303,7 +305,6 @@ public class ReportsFrame extends javax.swing.JFrame {
 	    AnalysedData analysedData = new AnalysedData();
             count++;
             for(int col = 0;col < dm2.getColumnCount();col++) {
-	        System.out.println(dm2.getValueAt(row, col));
                 String value = dm2.getValueAt(row, col).toString();
                 switch(col){
                     case 0:
@@ -343,4 +344,37 @@ public class ReportsFrame extends javax.swing.JFrame {
             new AnalysedDataDAOImpl().save(next);
         }
     }
+
+    private void fillTablesWithList(ArrayList<AnalysedData> analysedDataList,String [] columns,JTable analysedDataTable, JScrollPane jScrollPane2, ReportsFrame aThis) {
+        DefaultTableModel dtm = new DefaultTableModel(columns,0) ;
+        
+        analysedDataTable.setDefaultEditor(Object.class, null);
+
+        //dtm = (DefaultTableModel) DbUtils.resultSetToTableModel(rs);
+
+        for(int i=0;i<analysedDataList.size();i++)
+        {
+            Object [] obj = {analysedDataList.get(i).getAnalysedDataId(),analysedDataList.get(i).getKeyword(),analysedDataList.get(i).getProfitableBooks(),analysedDataList.get(i).getAnalysisDate()};
+            dtm.addRow(obj);
+        }
+        
+        analysedDataTable.setModel(dtm);
+
+        analysedDataTable.getColumnModel().getColumn(0).setWidth(0);
+        analysedDataTable.getColumnModel().getColumn(0).setMinWidth(0);
+        analysedDataTable.getColumnModel().getColumn(0).setMaxWidth(0);
+
+        DefaultTableCellRenderer headerRenderer = new DefaultTableCellRenderer();
+        headerRenderer.setBackground(new Color(11, 18, 29));
+        headerRenderer.setForeground(new Color(140, 198, 62));
+
+        for (int i = 0; i < analysedDataTable.getModel().getColumnCount(); i++) {
+            analysedDataTable.getColumnModel().getColumn(i).setHeaderRenderer(headerRenderer);
+        }
+        analysedDataTable.setShowHorizontalLines(true);
+        analysedDataTable.setShowVerticalLines(true);
+        this.getContentPane().setBackground(Color.WHITE);
+        jScrollPane2.getViewport().setBackground(Color.WHITE);
+    }
+  
 }

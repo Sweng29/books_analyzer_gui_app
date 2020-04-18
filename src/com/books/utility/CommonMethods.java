@@ -6,8 +6,10 @@
 package com.books.utility;
 
 
+import com.books.models.AnalysedData;
 import java.awt.Color;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
