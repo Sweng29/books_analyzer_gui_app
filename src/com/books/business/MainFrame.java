@@ -5,15 +5,9 @@
  */
 package com.books.business;
 
-import java.awt.event.MouseEvent;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 
 
@@ -36,7 +30,7 @@ public BoxLayout box;
        public MainFrame() {
         
            setExtendedState(JFrame.MAXIMIZED_BOTH);
-           setUndecorated(true);
+           //setUndecorated(true);
            initComponents();
            userName.setText(LoginFrame.userModel.getUserName());
     }
@@ -106,7 +100,8 @@ public BoxLayout box;
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Airbnb");
         setBackground(new java.awt.Color(255, 255, 255));
-        setMinimumSize(new java.awt.Dimension(1024, 600));
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setMinimumSize(new java.awt.Dimension(800, 600));
 
         jPanel_Center.setLayout(new java.awt.BorderLayout());
 

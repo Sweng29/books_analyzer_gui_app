@@ -18,6 +18,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -76,6 +77,7 @@ public class CSVLoaderFrame extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         deletePreviousDataBtn = new javax.swing.JLabel();
         deletePreviousDataBtn1 = new javax.swing.JLabel();
+        dateField = new com.toedter.calendar.JDateChooser();
 
         confirmDeleteDialog.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         confirmDeleteDialog.setUndecorated(true);
@@ -224,7 +226,7 @@ public class CSVLoaderFrame extends javax.swing.JFrame {
         jLabel4.setForeground(new java.awt.Color(255, 0, 51));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Please delete the data once analysed.");
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 30, 290, 26));
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 30, 290, 26));
 
         attendanceSearch.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
         attendanceSearch.addActionListener(new java.awt.event.ActionListener() {
@@ -237,7 +239,7 @@ public class CSVLoaderFrame extends javax.swing.JFrame {
                 attendanceSearchKeyReleased(evt);
             }
         });
-        jPanel2.add(attendanceSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 40, 220, -1));
+        jPanel2.add(attendanceSearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, 30, 220, -1));
 
         csvTable.setFont(new java.awt.Font("Century Gothic", 0, 17)); // NOI18N
         csvTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -265,7 +267,7 @@ public class CSVLoaderFrame extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(csvTable);
 
-        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 1330, 580));
+        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 1330, 510));
 
         csvLoaderBtn.setBackground(new java.awt.Color(53, 168, 83));
         csvLoaderBtn.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
@@ -293,12 +295,12 @@ public class CSVLoaderFrame extends javax.swing.JFrame {
                 analysisBtnMouseClicked(evt);
             }
         });
-        jPanel2.add(analysisBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 30, 180, 30));
+        jPanel2.add(analysisBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 90, 180, 30));
 
         jLabel5.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Search");
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 40, -1, 26));
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 30, -1, 26));
 
         deletePreviousDataBtn.setBackground(new java.awt.Color(53, 168, 83));
         deletePreviousDataBtn.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
@@ -312,7 +314,7 @@ public class CSVLoaderFrame extends javax.swing.JFrame {
                 deletePreviousDataBtnMouseClicked(evt);
             }
         });
-        jPanel2.add(deletePreviousDataBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 30, 180, 30));
+        jPanel2.add(deletePreviousDataBtn, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 90, 180, 30));
 
         deletePreviousDataBtn1.setBackground(new java.awt.Color(53, 168, 83));
         deletePreviousDataBtn1.setFont(new java.awt.Font("Century Gothic", 0, 15)); // NOI18N
@@ -326,7 +328,10 @@ public class CSVLoaderFrame extends javax.swing.JFrame {
                 deletePreviousDataBtn1MouseClicked(evt);
             }
         });
-        jPanel2.add(deletePreviousDataBtn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 30, 120, 30));
+        jPanel2.add(deletePreviousDataBtn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1220, 90, 130, 30));
+
+        dateField.setDateFormatString("yyyy-MM-dd");
+        jPanel2.add(dateField, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 210, 30));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 1370, 670));
 
@@ -387,6 +392,7 @@ public class CSVLoaderFrame extends javax.swing.JFrame {
     private void analysisBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_analysisBtnMouseClicked
         //ResultSet resultSet = new BookDetailDAOImpl().findAllAnalysedData("");
         //new ReportsFrame(resultSet).setVisible(true);
+        
         analyseData();
     }//GEN-LAST:event_analysisBtnMouseClicked
 
@@ -459,6 +465,7 @@ public class CSVLoaderFrame extends javax.swing.JFrame {
     private javax.swing.JDialog confirmDeleteDialog;
     private javax.swing.JLabel csvLoaderBtn;
     private javax.swing.JTable csvTable;
+    private com.toedter.calendar.JDateChooser dateField;
     private javax.swing.JLabel deletePreviousDataBtn;
     private javax.swing.JLabel deletePreviousDataBtn1;
     private javax.swing.JLabel header;
@@ -491,7 +498,17 @@ public class CSVLoaderFrame extends javax.swing.JFrame {
         SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
         
         Set<String> checkedKeywords = new HashSet<String>();
-        String currentDate = myFormat.format(new Date());
+        String currentDate;
+        
+        if(dateField.getDate()!=null)
+        {
+            currentDate = myFormat.format(dateField.getDate());
+            System.err.println("Current Date from Date : "+currentDate);
+        }else{
+            currentDate = myFormat.format(new Date());
+            System.err.println("Current Date from default : "+currentDate);
+        }
+
         try {
             for (int i = 0; i < csvTable.getRowCount(); i++) {
                 DefaultTableModel row = (DefaultTableModel) csvTable.getModel();
